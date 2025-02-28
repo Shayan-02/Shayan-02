@@ -1,8 +1,6 @@
 # 👋 Hello! I am Shayan Shahbazi
 
-<p align="center">
-  [![Generate Snake](https://github.com/Shayan-02/Shayan-02/actions/workflows/main.yml/badge.svg)](https://github.com/Shayan-02/Shayan-02/actions/workflows/main.yml)
-</p>
+![Snake animation](https://github.com/Shayan-02/Shayan-02/raw/output/github-contribution-grid-snake.svg)
 
 ## 👨‍💻 About Me
 
