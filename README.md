@@ -1,7 +1,7 @@
 # 👋 Hello! I am Shayan Shahbazi
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Shayan-02/Shayan-02/output/github-contribution-grid-snake.svg" />
+  ![Snake animation](https://github.com/Shayan-02/Shayan-02/raw/output/github-contribution-grid-snake.svg)
 </p>
 
 ## 👨‍💻 About Me
