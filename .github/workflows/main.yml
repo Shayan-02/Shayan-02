@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Generate Snake Animation
         uses: Platane/snk@master
@@ -20,7 +20,7 @@ jobs:
             dist/github-contribution-grid-snake.svg
 
       - name: Upload Snake Animation
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snake-animation
           path: dist
