@@ -1,9 +1,9 @@
 
 # 👋 Hello! I am Shayan Shahbazi
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/imrrobat/imrrobat/d1b244e170d2b75fdda3efd499eaaf163f7a617c/images/github-contribution-grid-snake.svg" />
-</p>
+### 📈 My GitHub Activity  
+![GitHub Contribution Snake](https://raw.githubusercontent.com/Shayan-02/Shayan-02/output/github-contribution-grid-snake.svg)
+
 
 <h2 align="center">👨‍💻 About Me</h2>
 
