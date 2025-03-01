@@ -27,8 +27,8 @@ jobs:
         with:
           github_user_name: ${{ github.repository_owner }}
           # Adjust snake speed by changing the 'speed' parameter (value between 1 and 10)
-          speed: 3  # Adjust the speed (lower values = slower snake)
-          # Ensure snake stays within bounds
+          speed: 1  # Slow down the snake (lower values = slower snake)
+          # Ensure snake stays within bounds of the grid
           bounds: true  # Keeps the snake within the grid boundaries
           outputs: |
             dist/github-contribution-grid-snake.svg
