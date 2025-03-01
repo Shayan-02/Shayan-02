@@ -4,21 +4,11 @@
 
 ## 👨‍💻 About Me
 
-### EN English
 - 🎓 **Computer Engineer with a focus on Data Science**  
 - 💻 **Full-Stack Developer (Front-End | Back-End | Database)**  
 - 🚀 **Experience in developing Windows software and PWAs (with Flutter)**  
 - 🎯 **Passionate about learning and contributing to open-source projects**  
 - 💡 **Skilled in Python, JavaScript, Dart, SQL, and various front-end/back-end frameworks**  
-
-### 🇮🇷 فارسی
-- 🎓 **مهندس کامپیوتر با گرایش علوم داده**  
-- 💻 **توسعه‌دهنده فول‌استک (فرانت‌اند | بک‌اند | پایگاه‌داده)**  
-- 🚀 **تجربه در توسعه نرم‌افزارهای ویندوز و PWA (با فلاتر)**  
-- 🎯 **علاقه‌مند به یادگیری و مشارکت در پروژه‌های متن‌باز**  
-- 💡 **مسلط به پایتون، جاوااسکریپت، دارت، SQL و فریمورک‌های مختلف فرانت‌اند و بک‌اند**  
-
----
 
 ## ⚡ My Skills
 
