@@ -18,7 +18,7 @@ jobs:
       - name: Generate Snake Animation
         uses: Platane/snk@v2
         with:
-          github_user_name: ${{ secrets.GITHUB_USER_NAME }}  # نام کاربری به درستی از مخزن گرفته می‌شود
+          github_user_name: Shayan-02  # نام کاربری خود را مستقیماً وارد کنید
 
       - name: Move output to dist
         run: |
@@ -36,17 +36,16 @@ jobs:
 
       - name: Commit and Push Changes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # استفاده از توکن برای دسترسی به مخزن
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
 
-          # ایجاد پوشه و انتقال فایل خروجی به آن
           mkdir -p output
           mv dist/snake.svg output/github-contribution-grid-snake.svg || exit 1
 
-          # بررسی تغییرات و اگر چیزی تغییر کرده بود، commit و push کردن
           git add output/github-contribution-grid-snake.svg
+
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
