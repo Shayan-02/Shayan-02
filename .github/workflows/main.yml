@@ -19,14 +19,13 @@ jobs:
         uses: Platane/snk@v3
         with:
           github_user_name: Shayan-02
-          svg_out_path: dist/github-contribution-grid-snake.svg
-          gif_out_path: dist/github-contribution-grid-snake.gif
+          outputs: dist
 
       - name: Upload Snake Animation
         uses: actions/upload-artifact@v4
         with:
           name: snake-animation
-          path: dist
+          path: dist/snake.svg
 
       - name: Commit and Push Changes
         env:
@@ -36,7 +35,7 @@ jobs:
           git config --global user.email "github-actions@github.com"
 
           mkdir -p output
-          mv dist/github-contribution-grid-snake.svg output/ || exit 1
+          mv dist/snake.svg output/github-contribution-grid-snake.svg || exit 1
 
           git add output/github-contribution-grid-snake.svg
 
