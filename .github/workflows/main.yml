@@ -16,10 +16,14 @@ jobs:
         run: mkdir -p dist
 
       - name: Generate Snake Animation
-        uses: Platane/snk@v3
+        uses: Platane/snk@v2
         with:
           github_user_name: Shayan-02
-          outputs: dist
+
+      - name: Move output to dist
+        run: |
+          mkdir -p dist
+          mv snake.svg dist/snake.svg || exit 1
 
       - name: List dist directory contents
         run: ls -R dist
