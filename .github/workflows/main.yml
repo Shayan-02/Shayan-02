@@ -16,8 +16,8 @@ jobs:
         uses: Platane/snk@master
         with:
           github_user_name: Shayan-02
-          outputs: |
-            dist/github-contribution-grid-snake.svg
+          svg_out_path: dist/github-contribution-grid-snake.svg
+          gif_out_path: dist/github-contribution-grid-snake.gif
 
       - name: Upload Snake Animation
         uses: actions/upload-artifact@v4
@@ -25,12 +25,22 @@ jobs:
           name: snake-animation
           path: dist
 
-      - name: Commit and Push
+      - name: Commit and Push Changes
+        env:
+          GITHUB_TOKEN: ${{ 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 }}
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
+
           mkdir -p output
-          mv dist/github-contribution-grid-snake.svg output/
+          mv dist/github-contribution-grid-snake.svg output/ || exit 1
+
           git add output/github-contribution-grid-snake.svg
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
           git commit -m "Update Snake Animation"
-          git push
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/Shayan-02/Shayan-02.git main
