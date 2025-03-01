@@ -4,7 +4,7 @@
 
 ## 👨‍💻 About Me
 
-### 🇬🇧 English
+### EN English
 - 🎓 **Computer Engineer with a focus on Data Science**  
 - 💻 **Full-Stack Developer (Front-End | Back-End | Database)**  
 - 🚀 **Experience in developing Windows software and PWAs (with Flutter)**  
