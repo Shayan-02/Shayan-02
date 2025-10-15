@@ -29,6 +29,7 @@
 
 ### 🛠 Back-End Development:
 ![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=django&logoColor=white)
 
 ### 🗄 Database Management:
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
@@ -63,3 +64,4 @@
 ---
 
 ⭐ **Liked this profile? Please give it a star!** ⭐
+
