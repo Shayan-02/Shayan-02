@@ -1,7 +1,12 @@
-# 👋 Hello! I am Shayan Shahbazi
+<div>
+  <img style="width : 100%" src="https://capsule-render.vercel.app/api?type=waving&height=100&section=header&reversal=false&fontSize=70&fontColor=FFFFFF&fontAlign=50&fontAlignY=50&stroke=-&descSize=20&descAlign=50&descAlignY=50&theme=cobalt"  />
+</div>
+
+# 👋 Hi there! I am Shayan Shahbazi
 
 ![Snake animation](https://github.com/Shayan-02/Shayan-02/raw/output/github-contribution-grid-snake.svg)
 
+###
 
 ## 👨‍💻 About Me
 
@@ -46,8 +51,11 @@
 ## 📊 My GitHub Stats
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Shayan-02&show_icons=true&theme=radical" alt="GitHub Stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Shayan-02&layout=compact&theme=radical" alt="Top Languages" />
+  <!-- <img src="https://github-readme-stats.vercel.app/api?username=Shayan-02&show_icons=true&theme=radical" alt="GitHub Stats" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Shayan-02&layout=compact&theme=radical" alt="Top Languages" /> -->
+   <img src="https://github-readme-stats.vercel.app/api?username=Shayan-02&hide_title=false&hide_rank=false&show_icons=true&include_all_commits=true&count_private=true&disable_animations=false&theme=radical&locale=en&hide_border=false&order=1" alt="stats graph"  />
+   <img src="https://github-readme-stats.vercel.app/api/top-langs?username=Shayan-02&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=8&theme=radical&hide_border=false&order=2" alt="languages graph"  />
+</div>
 </p>
 
 ---
