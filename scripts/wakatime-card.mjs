@@ -3,7 +3,9 @@ import path from "path";
 import axios from "axios";
 
 const OUT_DIR = "assets";
-const OUT_FILE = path.join(OUT_DIR, "wakatime.svg");
+const OUT_LANGS = path.join(OUT_DIR, "wakatime-langs.svg");
+const OUT_EDITORS = path.join(OUT_DIR, "wakatime-editors.svg");
+const OUT_OS = path.join(OUT_DIR, "wakatime-os.svg");
 
 const API_KEY = process.env.WAKATIME_API_KEY;
 if (!API_KEY) {
@@ -19,38 +21,11 @@ const theme = {
   text: "#e4e4e7",
   muted: "#9aa4bf",
   barBg: "#2a2b3d",
-  bars: [
-    "#ff4d6d", // radical main
-    "#f1fa8c", // yellow
-    "#8be9fd", // cyan
-    "#50fa7b", // green
-    "#bd93f9", // purple
-    "#ffb86c", // orange
-    "#ff79c6", // magenta
-  ],
+  bars: ["#ff4d6d", "#f1fa8c", "#8be9fd", "#50fa7b", "#bd93f9", "#ffb86c", "#ff79c6"],
 };
 
 function b64(s) {
   return Buffer.from(s).toString("base64");
-}
-
-function fmtMinutes(mins) {
-  const h = Math.floor(mins / 60);
-  const m = mins % 60;
-  if (h <= 0) return `${m}m`;
-  if (m === 0) return `${h}h`;
-  return `${h}h ${m}m`;
-}
-
-// WakaTime endpoint: user summaries (last 7 days). Requires API key.
-async function fetchSummary() {
-  const auth = b64(API_KEY);
-  const url = "https://wakatime.com/api/v1/users/current/summaries?range=last_7_days";
-  const res = await axios.get(url, {
-    headers: { Authorization: `Basic ${auth}` },
-    timeout: 20000,
-  });
-  return res.data;
 }
 
 function escapeXml(str) {
@@ -62,14 +37,52 @@ function escapeXml(str) {
     .replace(/'/g, "&apos;");
 }
 
-function renderSvg({ title, subtitle, totalText, rows }) {
+function fmtMinutes(mins) {
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  if (h <= 0) return `${m}m`;
+  if (m === 0) return `${h}h`;
+  return `${h}h ${m}m`;
+}
+
+async function fetchSummaryAllTime() {
+  const auth = b64(API_KEY);
+  const url = "https://wakatime.com/api/v1/users/current/summaries?range=all_time";
+  const res = await axios.get(url, {
+    headers: { Authorization: `Basic ${auth}` },
+    timeout: 30000,
+  });
+  return res.data;
+}
+
+function aggregateDays(days, key) {
+  const map = new Map();
+  let totalSeconds = 0;
+
+  for (const day of days) {
+    totalSeconds += day.grand_total?.total_seconds || 0;
+    for (const item of day[key] || []) {
+      map.set(item.name, (map.get(item.name) || 0) + (item.total_seconds || 0));
+    }
+  }
+
+  return { map, totalSeconds };
+}
+
+// ✅ فقط اینجا اصلاح شد: فاصله‌ی هدر بیشتر شد تا ردیف اول (که معمولاً Other است) روی خط نیفتد.
+function renderSvg({ title, totalText, rows }) {
   const width = 900;
   const padding = 28;
   const rowH = 34;
-  const headerH = 92;
+
+  // Increased spacing:
+  const headerH = 98; // قبلاً حدود 78 بود — الان ردیف اول پایین‌تر می‌آید
+  const dividerY = 78; // خط جداکننده پایین‌تر آمد
+
   const barX = 360;
   const barW = width - barX - padding;
   const barH = 10;
+
   const height = headerH + rows.length * rowH + 30;
 
   const gradientId = "bgGrad";
@@ -112,57 +125,74 @@ function renderSvg({ title, subtitle, totalText, rows }) {
   </defs>
 
   <rect x="0" y="0" width="${width}" height="${height}" rx="18" ry="18" fill="url(#${gradientId})" filter="url(#shadow)" />
-  <text x="${padding}" y="42" fill="${theme.title}" font-size="22" font-weight="700" font-family="ui-sans-serif, system-ui">📊 ${escapeXml(
+  <text x="${padding}" y="44" fill="${theme.title}" font-size="22" font-weight="700" font-family="ui-sans-serif, system-ui">📊 ${escapeXml(
     title
   )}</text>
-  <text x="${padding}" y="68" fill="${theme.muted}" font-size="13" font-family="ui-sans-serif, system-ui">${escapeXml(
-    subtitle
-  )}</text>
-  <text x="${width - padding}" y="42" text-anchor="end" fill="${theme.text}" font-size="14" font-weight="600" font-family="ui-sans-serif, system-ui">${escapeXml(
+  <text x="${width - padding}" y="44" text-anchor="end" fill="${theme.text}" font-size="14" font-weight="600" font-family="ui-sans-serif, system-ui">${escapeXml(
     totalText
   )}</text>
-  <line x1="${padding}" y1="82" x2="${width - padding}" y2="82" stroke="#334155" stroke-width="1" opacity="0.65" />
+
+  <line x1="${padding}" y1="${dividerY}" x2="${width - padding}" y2="${dividerY}" stroke="#334155" stroke-width="1" opacity="0.65" />
 
   ${svgRows}
 </svg>`;
 }
 
+function buildRowsFromMap(map, totalSecondsForPct, limit = 10) {
+  const items = [...map.entries()]
+    .map(([name, seconds]) => ({ name, seconds }))
+    .sort((a, b) => b.seconds - a.seconds)
+    .slice(0, limit);
+
+  return items.map((it) => {
+    const mins = Math.round(it.seconds / 60);
+    const percent = totalSecondsForPct > 0 ? (it.seconds / totalSecondsForPct) * 100 : 0;
+    return { name: it.name, time: fmtMinutes(mins), percent };
+  });
+}
+
 async function main() {
-  const data = await fetchSummary();
+  const data = await fetchSummaryAllTime();
   const days = data.data || [];
 
-  const langMap = new Map();
-  let totalSeconds = 0;
+  // LANGUAGES (All-time) — ✅ Total شامل Other است
+  const { map: langMap, totalSeconds: totalAll } = aggregateDays(days, "languages");
+  const langRows = buildRowsFromMap(langMap, totalAll, 10);
 
-  for (const day of days) {
-    totalSeconds += day.grand_total?.total_seconds || 0;
-    for (const l of day.languages || []) {
-      const prev = langMap.get(l.name) || { seconds: 0 };
-      langMap.set(l.name, { seconds: prev.seconds + (l.total_seconds || 0) });
-    }
-  }
-
-  const totalMinutes = Math.round(totalSeconds / 60);
-  const totalText = `Last 7 days: ${fmtMinutes(totalMinutes)}`;
-
-  const langs = [...langMap.entries()]
-    .map(([name, v]) => ({ name, seconds: v.seconds }))
-    .sort((a, b) => b.seconds - a.seconds)
-    .slice(0, 10);
-
-  const rows = langs.map((l) => {
-    const mins = Math.round(l.seconds / 60);
-    const percent = totalSeconds > 0 ? (l.seconds / totalSeconds) * 100 : 0;
-    return { name: l.name, time: fmtMinutes(mins), percent };
+  const langsSvg = renderSvg({
+    title: "WakaTime • Languages",
+    totalText: `All time: ${fmtMinutes(Math.round(totalAll / 60))}`,
+    rows: langRows,
   });
 
-  const title = "WakaTime • Languages";
-  const subtitle = "Last 7 days • auto-updated hourly";
-  const svg = renderSvg({ title, subtitle, totalText, rows });
+  // EDITORS (All-time)
+  const { map: editorMap, totalSeconds: totalEditors } = aggregateDays(days, "editors");
+  const editorRows = buildRowsFromMap(editorMap, totalEditors, 10);
+
+  const editorsSvg = renderSvg({
+    title: "WakaTime • Editors",
+    totalText: `All time: ${fmtMinutes(Math.round(totalEditors / 60))}`,
+    rows: editorRows,
+  });
+
+  // OS (All-time)
+  const { map: osMap, totalSeconds: totalOs } = aggregateDays(days, "operating_systems");
+  const osRows = buildRowsFromMap(osMap, totalOs, 10);
+
+  const osSvg = renderSvg({
+    title: "WakaTime • OS",
+    totalText: `All time: ${fmtMinutes(Math.round(totalOs / 60))}`,
+    rows: osRows,
+  });
 
   fs.mkdirSync(OUT_DIR, { recursive: true });
-  fs.writeFileSync(OUT_FILE, svg, "utf8");
-  console.log(`Wrote ${OUT_FILE}`);
+  fs.writeFileSync(OUT_LANGS, langsSvg, "utf8");
+  fs.writeFileSync(OUT_EDITORS, editorsSvg, "utf8");
+  fs.writeFileSync(OUT_OS, osSvg, "utf8");
+
+  console.log(`Wrote ${OUT_LANGS}`);
+  console.log(`Wrote ${OUT_EDITORS}`);
+  console.log(`Wrote ${OUT_OS}`);
 }
 
 main().catch((e) => {
