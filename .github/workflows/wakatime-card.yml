@@ -1,15 +1,15 @@
-name: WakaTime Card (SVG)
+name: WakaTime Cards (SVG)
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "0 * * * *"   # هر 1 ساعت
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  build-card:
+  build-cards:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,15 +21,15 @@ jobs:
       - name: Install deps
         run: npm install axios
 
-      - name: Generate SVG card
+      - name: Generate SVG cards
         env:
           WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
-        run: node scripts/wakatime-card.mjs
+        run: node scripts/wakatime-cards.mjs
 
       - name: Commit & push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add assets/wakatime.svg
-          git diff --cached --quiet || git commit -m "Update WakaTime card"
+          git add assets/wakatime-langs.svg assets/wakatime-editors.svg assets/wakatime-os.svg
+          git diff --cached --quiet || git commit -m "Update WakaTime cards"
           git push
