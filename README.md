@@ -62,7 +62,9 @@
 <p align="center">
   <img src="https://wakatime.com/badge/user/7a0e321c-6a7c-4913-9ddf-62794236e31f.svg">
   <br>
-  <img src="https://github-readme-stats.vercel.app/api/wakatime?username=Shayan02&theme=radical&langs_count=10" alt="wakatime stats">
+  <img src="./assets/wakatime.svg" alt="WakaTime Card (Radical)" />
+
+  <!-- <img src="https://github-readme-stats.vercel.app/api/wakatime?username=Shayan02&theme=radical&langs_count=10" alt="wakatime stats"> -->
 </p>
 
 ---
