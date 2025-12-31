@@ -45,9 +45,10 @@ function fmtMinutes(mins) {
   return `${h}h ${m}m`;
 }
 
-async function fetchSummaryAllTime() {
+// ✅ Correct endpoint for All-time (no "Missing start date")
+async function fetchAllTimeStats() {
   const auth = b64(API_KEY);
-  const url = "https://wakatime.com/api/v1/users/current/summaries?range=all_time";
+  const url = "https://wakatime.com/api/v1/users/current/stats/all_time";
   const res = await axios.get(url, {
     headers: { Authorization: `Basic ${auth}` },
     timeout: 30000,
@@ -55,34 +56,18 @@ async function fetchSummaryAllTime() {
   return res.data;
 }
 
-function aggregateDays(days, key) {
-  const map = new Map();
-  let totalSeconds = 0;
-
-  for (const day of days) {
-    totalSeconds += day.grand_total?.total_seconds || 0;
-    for (const item of day[key] || []) {
-      map.set(item.name, (map.get(item.name) || 0) + (item.total_seconds || 0));
-    }
-  }
-
-  return { map, totalSeconds };
-}
-
-// ✅ فقط اینجا اصلاح شد: فاصله‌ی هدر بیشتر شد تا ردیف اول (که معمولاً Other است) روی خط نیفتد.
+// ✅ header spacing increased so "Other" doesn't collide with divider
 function renderSvg({ title, totalText, rows }) {
   const width = 900;
   const padding = 28;
   const rowH = 34;
 
-  // Increased spacing:
-  const headerH = 98; // قبلاً حدود 78 بود — الان ردیف اول پایین‌تر می‌آید
-  const dividerY = 78; // خط جداکننده پایین‌تر آمد
+  const headerH = 98;   // more space above rows
+  const dividerY = 78;  // divider lower
 
   const barX = 360;
   const barW = width - barX - padding;
   const barH = 10;
-
   const height = headerH + rows.length * rowH + 30;
 
   const gradientId = "bgGrad";
@@ -138,50 +123,51 @@ function renderSvg({ title, totalText, rows }) {
 </svg>`;
 }
 
-function buildRowsFromMap(map, totalSecondsForPct, limit = 10) {
-  const items = [...map.entries()]
-    .map(([name, seconds]) => ({ name, seconds }))
-    .sort((a, b) => b.seconds - a.seconds)
-    .slice(0, limit);
-
-  return items.map((it) => {
-    const mins = Math.round(it.seconds / 60);
-    const percent = totalSecondsForPct > 0 ? (it.seconds / totalSecondsForPct) * 100 : 0;
-    return { name: it.name, time: fmtMinutes(mins), percent };
-  });
+function toRows(list = [], limit = 10) {
+  // list items usually include: name, percent, total_seconds, text
+  return (list || [])
+    .slice(0, limit)
+    .map((x) => ({
+      name: x.name,
+      time: x.text || fmtMinutes(Math.round((x.total_seconds || 0) / 60)),
+      percent: Number(x.percent || 0),
+    }));
 }
 
 async function main() {
-  const data = await fetchSummaryAllTime();
-  const days = data.data || [];
+  const payload = await fetchAllTimeStats();
+  const d = payload?.data;
 
-  // LANGUAGES (All-time) — ✅ Total شامل Other است
-  const { map: langMap, totalSeconds: totalAll } = aggregateDays(days, "languages");
-  const langRows = buildRowsFromMap(langMap, totalAll, 10);
+  if (!d) {
+    console.error("WakaTime returned empty data");
+    process.exit(1);
+  }
+
+  // ✅ total includes "Other" naturally
+  const totalText =
+    d.human_readable_total || (d.total_seconds ? fmtMinutes(Math.round(d.total_seconds / 60)) : "0m");
+  const totalLabel = `All time: ${totalText}`;
+
+  // Languages / Editors / OS (Other stays at top if it's top)
+  const langRows = toRows(d.languages, 10);
+  const editorRows = toRows(d.editors, 10);
+  const osRows = toRows(d.operating_systems, 10);
 
   const langsSvg = renderSvg({
     title: "WakaTime • Languages",
-    totalText: `All time: ${fmtMinutes(Math.round(totalAll / 60))}`,
+    totalText: totalLabel,
     rows: langRows,
   });
 
-  // EDITORS (All-time)
-  const { map: editorMap, totalSeconds: totalEditors } = aggregateDays(days, "editors");
-  const editorRows = buildRowsFromMap(editorMap, totalEditors, 10);
-
   const editorsSvg = renderSvg({
     title: "WakaTime • Editors",
-    totalText: `All time: ${fmtMinutes(Math.round(totalEditors / 60))}`,
+    totalText: totalLabel,
     rows: editorRows,
   });
 
-  // OS (All-time)
-  const { map: osMap, totalSeconds: totalOs } = aggregateDays(days, "operating_systems");
-  const osRows = buildRowsFromMap(osMap, totalOs, 10);
-
   const osSvg = renderSvg({
     title: "WakaTime • OS",
-    totalText: `All time: ${fmtMinutes(Math.round(totalOs / 60))}`,
+    totalText: totalLabel,
     rows: osRows,
   });
 
