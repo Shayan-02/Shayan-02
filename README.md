@@ -68,6 +68,24 @@
 ## My WakaTime Languages
 
 <!--START_SECTION:waka-->
+
+```txt
+From: 17 October 2021 - To: 31 December 2025
+
+Total Time: 913 hrs 33 mins
+
+Other            1,366 hrs 37 mins███████████████░░░░░░░░░░   59.93 %
+Python           597 hrs 28 mins ██████▓░░░░░░░░░░░░░░░░░░   26.20 %
+HTML             116 hrs 32 mins █▒░░░░░░░░░░░░░░░░░░░░░░░   05.11 %
+CSS              80 hrs 46 mins  █░░░░░░░░░░░░░░░░░░░░░░░░   03.54 %
+JavaScript       63 hrs 59 mins  ▓░░░░░░░░░░░░░░░░░░░░░░░░   02.81 %
+C++              13 hrs 32 mins  ░░░░░░░░░░░░░░░░░░░░░░░░░   00.59 %
+Text             7 hrs 27 mins   ░░░░░░░░░░░░░░░░░░░░░░░░░   00.33 %
+Jupyter          7 hrs 27 mins   ░░░░░░░░░░░░░░░░░░░░░░░░░   00.33 %
+Markdown         5 hrs 51 mins   ░░░░░░░░░░░░░░░░░░░░░░░░░   00.26 %
+JSON             4 hrs           ░░░░░░░░░░░░░░░░░░░░░░░░░   00.18 %
+```
+
 <!--END_SECTION:waka-->
 
 
