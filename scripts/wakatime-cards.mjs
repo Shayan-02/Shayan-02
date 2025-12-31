@@ -13,7 +13,7 @@ if (!API_KEY) {
   process.exit(1);
 }
 
-// Radical theme
+// Radical theme (subtle + clean)
 const theme = {
   bg1: "#141321",
   bg2: "#1a1b27",
@@ -21,6 +21,7 @@ const theme = {
   text: "#e4e4e7",
   muted: "#9aa4bf",
   barBg: "#2a2b3d",
+  otherColor: "#ff4d6d", // keep same hue, just reduce opacity
   bars: ["#ff4d6d", "#f1fa8c", "#8be9fd", "#50fa7b", "#bd93f9", "#ffb86c", "#ff79c6"],
 };
 
@@ -45,7 +46,6 @@ function fmtMinutes(mins) {
   return `${h}h ${m}m`;
 }
 
-// ✅ Correct endpoint for All-time (no "Missing start date")
 async function fetchAllTimeStats() {
   const auth = b64(API_KEY);
   const url = "https://wakatime.com/api/v1/users/current/stats/all_time";
@@ -56,41 +56,76 @@ async function fetchAllTimeStats() {
   return res.data;
 }
 
-// ✅ header spacing increased so "Other" doesn't collide with divider
+function sumSeconds(list = []) {
+  return (list || []).reduce((acc, x) => acc + (x.total_seconds || 0), 0);
+}
+
+function toRows(list = [], limit = 10) {
+  return (list || [])
+    .slice(0, limit)
+    .map((x) => ({
+      name: x.name,
+      time: x.text || fmtMinutes(Math.round((x.total_seconds || 0) / 60)),
+      percent: Number(x.percent || 0),
+      seconds: x.total_seconds || 0,
+    }));
+}
+
+// ✅ Major visual upgrades here:
+// - Reserve a right column for percent so it never overlaps the bar
+// - Rank numbers (#1, #2, ...)
+// - "Updated hourly" label (small)
+// - Other slightly dimmed but still visible
+// - very subtle glow on filled bars
 function renderSvg({ title, totalText, rows }) {
   const width = 900;
   const padding = 28;
   const rowH = 34;
 
-  const headerH = 98;   // more space above rows
-  const dividerY = 78;  // divider lower
+  // Extra header spacing so top row (often Other) doesn't touch divider
+  const headerH = 104;
+  const dividerY = 82;
 
-  const barX = 360;
-  const barW = width - barX - padding;
+  // Columns
+  const rankW = 30;              // for #1, #2, ...
+  const nameX = padding + rankW; // name starts after rank
+  const barX = 380;              // bars start
+  const pctColW = 76;            // reserved column for percent text (prevents overlap)
+  const barW = width - barX - padding - pctColW; // reduced width so bar ends before percent column
   const barH = 10;
-  const height = headerH + rows.length * rowH + 30;
 
-  const gradientId = "bgGrad";
+  const height = headerH + rows.length * rowH + 30;
 
   const svgRows = rows
     .map((r, i) => {
       const y = headerH + i * rowH;
-      const color = theme.bars[i % theme.bars.length];
+      const isOther = r.name === "Other";
+
+      const baseColor = isOther ? theme.otherColor : theme.bars[i % theme.bars.length];
+      const barOpacity = isOther ? 0.85 : 1; // ✅ "کمی" کم‌رنگ، ولی واضح
+
       const pct = Math.max(0, Math.min(1, r.percent / 100));
       const fillW = Math.round(barW * pct);
 
+      const rankText = `#${i + 1}`;
+
       return `
-        <text x="${padding}" y="${y}" fill="${theme.text}" font-size="14" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">${escapeXml(
-          r.name
-        )}</text>
-        <text x="${barX - 14}" y="${y}" text-anchor="end" fill="${theme.muted}" font-size="13" font-family="ui-sans-serif, system-ui">${escapeXml(
-          r.time
-        )}</text>
+        <text x="${padding}" y="${y}" fill="${theme.muted}" font-size="12" font-weight="600"
+              font-family="ui-sans-serif, system-ui">${escapeXml(rankText)}</text>
+
+        <text x="${nameX}" y="${y}" fill="${theme.text}" font-size="14"
+              font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">${escapeXml(r.name)}</text>
+
+        <text x="${barX - 16}" y="${y}" text-anchor="end" fill="${theme.muted}" font-size="13"
+              font-family="ui-sans-serif, system-ui">${escapeXml(r.time)}</text>
+
         <rect x="${barX}" y="${y - 12}" rx="6" ry="6" width="${barW}" height="${barH}" fill="${theme.barBg}" />
-        <rect x="${barX}" y="${y - 12}" rx="6" ry="6" width="${fillW}" height="${barH}" fill="${color}" />
-        <text x="${width - padding}" y="${y}" text-anchor="end" fill="${theme.muted}" font-size="13" font-family="ui-sans-serif, system-ui">${r.percent.toFixed(
-          2
-        )}%</text>
+
+        <rect x="${barX}" y="${y - 12}" rx="6" ry="6" width="${fillW}" height="${barH}"
+              fill="${baseColor}" opacity="${barOpacity}" filter="url(#barGlow)" />
+
+        <text x="${width - padding}" y="${y}" text-anchor="end" fill="${theme.muted}" font-size="13"
+              font-family="ui-sans-serif, system-ui">${r.percent.toFixed(2)}%</text>
       `;
     })
     .join("\n");
@@ -100,38 +135,39 @@ function renderSvg({ title, totalText, rows }) {
     title
   )}">
   <defs>
-    <linearGradient id="${gradientId}" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="${theme.bg1}"/>
       <stop offset="100%" stop-color="${theme.bg2}"/>
     </linearGradient>
+
+    <!-- subtle bar glow -->
+    <filter id="barGlow" x="-20%" y="-50%" width="140%" height="200%">
+      <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#ffffff" flood-opacity="0.08"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.22"/>
+    </filter>
+
+    <!-- subtle card shadow -->
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
       <feDropShadow dx="0" dy="10" stdDeviation="18" flood-color="#000000" flood-opacity="0.35"/>
     </filter>
   </defs>
 
-  <rect x="0" y="0" width="${width}" height="${height}" rx="18" ry="18" fill="url(#${gradientId})" filter="url(#shadow)" />
-  <text x="${padding}" y="44" fill="${theme.title}" font-size="22" font-weight="700" font-family="ui-sans-serif, system-ui">📊 ${escapeXml(
-    title
-  )}</text>
-  <text x="${width - padding}" y="44" text-anchor="end" fill="${theme.text}" font-size="14" font-weight="600" font-family="ui-sans-serif, system-ui">${escapeXml(
-    totalText
-  )}</text>
+  <rect x="0" y="0" width="${width}" height="${height}" rx="18" ry="18" fill="url(#bgGrad)" filter="url(#shadow)" />
 
-  <line x1="${padding}" y1="${dividerY}" x2="${width - padding}" y2="${dividerY}" stroke="#334155" stroke-width="1" opacity="0.65" />
+  <text x="${padding}" y="46" fill="${theme.title}" font-size="22" font-weight="800"
+        font-family="ui-sans-serif, system-ui">📊 ${escapeXml(title)}</text>
+
+  <text x="${padding}" y="70" fill="${theme.muted}" font-size="12" font-weight="600"
+        font-family="ui-sans-serif, system-ui">Updated hourly</text>
+
+  <text x="${width - padding}" y="46" text-anchor="end" fill="${theme.text}" font-size="14" font-weight="700"
+        font-family="ui-sans-serif, system-ui">${escapeXml(totalText)}</text>
+
+  <line x1="${padding}" y1="${dividerY}" x2="${width - padding}" y2="${dividerY}"
+        stroke="#334155" stroke-width="1" opacity="0.65" />
 
   ${svgRows}
 </svg>`;
-}
-
-function toRows(list = [], limit = 10) {
-  // list items usually include: name, percent, total_seconds, text
-  return (list || [])
-    .slice(0, limit)
-    .map((x) => ({
-      name: x.name,
-      time: x.text || fmtMinutes(Math.round((x.total_seconds || 0) / 60)),
-      percent: Number(x.percent || 0),
-    }));
 }
 
 async function main() {
@@ -143,32 +179,32 @@ async function main() {
     process.exit(1);
   }
 
-  // ✅ total includes "Other" naturally
-  const totalText =
-    d.human_readable_total || (d.total_seconds ? fmtMinutes(Math.round(d.total_seconds / 60)) : "0m");
-  const totalLabel = `All time: ${totalText}`;
+  const languages = d.languages || [];
+  const editors = d.editors || [];
+  const operatingSystems = d.operating_systems || [];
 
-  // Languages / Editors / OS (Other stays at top if it's top)
-  const langRows = toRows(d.languages, 10);
-  const editorRows = toRows(d.editors, 10);
-  const osRows = toRows(d.operating_systems, 10);
+  // ✅ Total from languages sum (includes Other) => always consistent
+  const totalSecondsFromLangs = sumSeconds(languages);
+  const totalSeconds = totalSecondsFromLangs > 0 ? totalSecondsFromLangs : (d.total_seconds || 0);
+
+  const totalText = `Total: ${fmtMinutes(Math.round(totalSeconds / 60))}`;
 
   const langsSvg = renderSvg({
     title: "WakaTime • Languages",
-    totalText: totalLabel,
-    rows: langRows,
+    totalText,
+    rows: toRows(languages, 10),
   });
 
   const editorsSvg = renderSvg({
     title: "WakaTime • Editors",
-    totalText: totalLabel,
-    rows: editorRows,
+    totalText,
+    rows: toRows(editors, 10),
   });
 
   const osSvg = renderSvg({
     title: "WakaTime • OS",
-    totalText: totalLabel,
-    rows: osRows,
+    totalText,
+    rows: toRows(operatingSystems, 10),
   });
 
   fs.mkdirSync(OUT_DIR, { recursive: true });
