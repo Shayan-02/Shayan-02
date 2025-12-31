@@ -65,6 +65,12 @@
   <img src="https://github-readme-stats.vercel.app/api/wakatime?username=Shayan02&theme=radical&langs_count=10" alt="wakatime stats">
 </p>
 
+## My WakaTime Languages
+
+<!--START_SECTION:waka-->
+<!--END_SECTION:waka-->
+
+
 ---
 
 ## 📞 Contact Me
