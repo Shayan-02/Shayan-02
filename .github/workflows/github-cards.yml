@@ -1,0 +1,35 @@
+name: GitHub Cards (SVG)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"   # هر 1 ساعت
+
+permissions:
+  contents: write
+
+jobs:
+  build-cards:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Generate GitHub SVG cards
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_USERNAME: Shayan-02
+        run: node scripts/github-cards.mjs
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/github-stats.svg assets/github-langs.svg
+          git commit -m "update github cards" || exit 0
+          git push
