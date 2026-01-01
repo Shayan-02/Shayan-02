@@ -58,14 +58,28 @@
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Shayan-02&layout=compact&theme=radical" alt="Top Languages" /> -->
    <!-- <img src="https://github-readme-stats.vercel.app/api?username=Shayan-02&hide_title=false&hide_rank=false&show_icons=true&include_all_commits=true&count_private=true&disable_animations=false&theme=radical&locale=en&hide_border=false&order=1" alt="stats graph"  />
    <img src="https://github-readme-stats.vercel.app/api/top-langs?username=Shayan-02&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=8&theme=radical&hide_border=false&order=2" alt="languages graph"  /> -->
+
+<!-- 
 ## 📈 My GitHub Stats
 <p align="center">
   <img src="./assets/github-stats.svg" />
   <br/>
   <img src="./assets/github-langs.svg" />
-</p>
+</p> -->
 
 <!-- </p> -->
+
+## 📊 My GitHub Stats
+<p align="center">
+  <img src="./assets/github-stats.svg" alt="GitHub Stats" />
+  <br/>
+  <img src="./assets/github-activity.svg" alt="GitHub Activity" />
+  <br/>
+  <img src="./assets/github-langs.svg" alt="GitHub Languages" />
+</p>
+
+<br>
+<br>
 
 ## 📊 My Wakatime Stats
 
