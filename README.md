@@ -48,22 +48,24 @@
 
 ---
 
-## 📊 My GitHub Stats
 
-<p align="center">
+
+<!-- 
+## 📊 My GitHub Stats
+<p align="center"> 
+-->
   <!-- <img src="https://github-readme-stats.vercel.app/api?username=Shayan-02&show_icons=true&theme=radical" alt="GitHub Stats" />
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Shayan-02&layout=compact&theme=radical" alt="Top Languages" /> -->
    <!-- <img src="https://github-readme-stats.vercel.app/api?username=Shayan-02&hide_title=false&hide_rank=false&show_icons=true&include_all_commits=true&count_private=true&disable_animations=false&theme=radical&locale=en&hide_border=false&order=1" alt="stats graph"  />
    <img src="https://github-readme-stats.vercel.app/api/top-langs?username=Shayan-02&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=8&theme=radical&hide_border=false&order=2" alt="languages graph"  /> -->
-  <img src="https://github-readme-stats.vercel.app/api
-?username=Shayan-02
-&show_icons=true
-&bg_color=141321,1a1b27
-&title_color=ff4d6d
-&text_color=e4e4e7
-&icon_color=8be9fd
-&border_radius=18" />
+## 📈 My GitHub Stats
+<p align="center">
+  <img src="./assets/github-stats.svg" />
+  <br/>
+  <img src="./assets/github-langs.svg" />
 </p>
+
+<!-- </p> -->
 
 ## 📊 My Wakatime Stats
 
