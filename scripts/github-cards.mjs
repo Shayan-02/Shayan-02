@@ -23,16 +23,16 @@ if (!USERNAME) {
 // Fixed range start
 const FROM_YEAR = 2021;
 
-// Official / GitHub-friendly theme (not neon pink)
+// Professional theme (GitHub-friendly, no neon pink)
 const theme = {
   bg1: "#0B1220",
   bg2: "#111827",
-  title: "#E5E7EB note: official",
-  accent: "#0EA5E9", // official blue
+  title: "#E5E7EB",
   text: "#E5E7EB",
   muted: "#94A3B8",
   barBg: "#1F2937",
   stroke: "#334155",
+  accent: "#0EA5E9",
   bars: ["#0EA5E9", "#22C55E", "#A78BFA", "#F59E0B", "#38BDF8", "#14B8A6", "#EAB308"],
 };
 
@@ -77,10 +77,94 @@ async function ghGraphQL(query, variables) {
   return json.data;
 }
 
-function svgHeader({ width, height, title, subtitleLeft, subtitleRight, totalText, topText }) {
-  const padding = 28;
-  const dividerY = 98;
+/**
+ * Grade (combined) using log normalization
+ * Score in [0..1], mapped to D/C/B/A/S
+ *
+ * Combined signals:
+ * - activity: commits, prs, issues, reviews
+ * - impact: stars
+ * - scope: repos
+ */
+function computeGrade({ commits, prs, issues, reviews, starsTotal, reposTotal }) {
+  // log(1+x) for diminishing returns
+  const L = (x) => Math.log1p(Math.max(0, Number(x || 0)));
 
+  // Targets are “soft caps” — adjust if you like later
+  const targets = {
+    commits: 4000,
+    prs: 200,
+    issues: 200,
+    reviews: 250,
+    stars: 300,
+    repos: 60,
+  };
+
+  const norm = (val, target) => {
+    const a = L(val);
+    const b = L(target);
+    return b === 0 ? 0 : Math.min(1, a / b);
+  };
+
+  // Weights (sum = 1)
+  const w = {
+    commits: 0.35,
+    prs: 0.20,
+    issues: constOrZero(0.10),
+    reviews: 0.10,
+    stars: 0.15,
+    repos: 0.10,
+  };
+
+  // Ensure valid weights (avoid accidental NaN)
+  function constOrZero(x) {
+    return Number.isFinite(x) ? x : 0;
+  }
+
+  const score =
+    w.commits * norm(commits, targets.commits) +
+    w.prs * norm(prs, targets.prs) +
+    w.issues * norm(issues, targets.issues) +
+    w.reviews * norm(reviews, targets.reviews) +
+    w.stars * norm(starsTotal, targets.stars) +
+    w.repos * norm(reposTotal, targets.repos);
+
+  const pct = Math.round(score * 100);
+
+  let letter = "D";
+  if (pct >= 85) letter = "S";
+  else if (pct >= 70) letter = "A";
+  else if (pct >= 55) letter = "B";
+  else if (pct >= 40) letter = "C";
+
+  return { score, pct, letter };
+}
+
+function ringSvg({ cx, cy, r, strokeWidth, pct, color, label }) {
+  const clamped = Math.max(0, Math.min(100, pct));
+  const C = 2 * Math.PI * r;
+  const dash = (C * clamped) / 100;
+  const gap = C - dash;
+
+  return `
+    <g>
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${theme.stroke}" stroke-width="${strokeWidth}" opacity="0.65"/>
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="${strokeWidth}"
+              stroke-linecap="round"
+              stroke-dasharray="${dash} ${gap}"
+              transform="rotate(-90 ${cx} ${cy})"
+              filter="url(#barGlow)"/>
+      <text x="${cx}" y="${cy + 7}" text-anchor="middle"
+            fill="${theme.text}" font-size="22" font-weight="900"
+            font-family="ui-sans-serif, system-ui">${escapeXml(label)}</text>
+      <text x="${cx}" y="${cy + 28}" text-anchor="middle"
+            fill="${theme.muted}" font-size="11" font-weight="700"
+            font-family="ui-sans-serif, system-ui">${clamped}%</text>
+    </g>
+  `;
+}
+
+function svgDefs() {
   return `
   <defs>
     <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
@@ -97,38 +181,17 @@ function svgHeader({ width, height, title, subtitleLeft, subtitleRight, totalTex
       <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.22"/>
     </filter>
   </defs>
-
-  <rect x="0" y="0" width="${width}" height="${height}" rx="18" ry="18" fill="url(#bgGrad)" filter="url(#shadow)" />
-
-  <text x="${padding}" y="46" fill="${theme.title}" font-size="22" font-weight="900"
-        font-family="ui-sans-serif, system-ui">${escapeXml(title)}</text>
-
-  <text x="${padding}" y="72" fill="${theme.muted}" font-size="12" font-weight="650"
-        font-family="ui-sans-serif, system-ui">${escapeXml(subtitleLeft)}</text>
-
-  ${
-    totalText
-      ? `<text x="${width - padding}" y="46" text-anchor="end" fill="${theme.text}" font-size="14" font-weight="900"
-        font-family="ui-sans-serif, system-ui">${escapeXml(totalText)}</text>`
-      : ""
-  }
-
-  ${
-    topText || subtitleRight
-      ? `<text x="${width - padding}" y="72" text-anchor="end" fill="${theme.muted}" font-size="12" font-weight="650"
-        font-family="ui-sans-serif, system-ui">${escapeXml(topText || subtitleRight)}</text>`
-      : ""
-  }
-
-  <line x1="${padding}" y1="${dividerY}" x2="${width - padding}" y2="${dividerY}"
-        stroke="${theme.stroke}" stroke-width="1" opacity="0.75" />
 `;
 }
 
+function baseCard({ width, height }) {
+  return `<rect x="0" y="0" width="${width}" height="${height}" rx="18" ry="18" fill="url(#bgGrad)" filter="url(#shadow)" />`;
+}
+
 /**
- * Card 1: Grid stats (professional, readable)
+ * Card 1: Grid stats + Grade ring
  */
-function renderGridStatsCard({ title, subtitleLeft, totalText, topText, items }) {
+function renderGridStatsCard({ title, subtitleLeft, totalText, topText, items, grade }) {
   const width = 900;
   const padding = 28;
   const headerH = 124;
@@ -142,12 +205,27 @@ function renderGridStatsCard({ title, subtitleLeft, totalText, topText, items })
 
   const height = headerH + rows * (boxH + cardGap) + 30;
 
+  // Ring placement (top-right)
+  const ringCx = width - padding - 46;
+  const ringCy = 58;
+
+  const ringColor =
+    grade.letter === "S"
+      ? theme.bars[1]
+      : grade.letter === "A"
+      ? theme.bars[0]
+      : grade.letter === "B"
+      ? theme.bars[2]
+      : grade.letter === "C"
+      ? theme.bars[3]
+      : theme.muted;
+
   const boxes = items
     .map((it, idx) => {
-      const r = Math.floor(idx / cols);
-      const c = idx % cols;
-      const x = padding + c * (boxW + cardGap);
-      const y = headerH + r * (boxH + cardGap);
+      const rr = Math.floor(idx / cols);
+      const cc = idx % cols;
+      const x = padding + cc * (boxW + cardGap);
+      const y = headerH + rr * (boxH + cardGap);
 
       const accent = theme.bars[idx % theme.bars.length];
 
@@ -169,14 +247,34 @@ function renderGridStatsCard({ title, subtitleLeft, totalText, topText, items })
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"
      xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${escapeXml(title)}">
-  ${svgHeader({
-    width,
-    height,
-    title,
-    subtitleLeft,
-    totalText,
-    topText,
+  ${svgDefs()}
+  ${baseCard({ width, height })}
+
+  <text x="${padding}" y="46" fill="${theme.title}" font-size="22" font-weight="900"
+        font-family="ui-sans-serif, system-ui">${escapeXml(title)}</text>
+
+  <text x="${padding}" y="72" fill="${theme.muted}" font-size="12" font-weight="650"
+        font-family="ui-sans-serif, system-ui">${escapeXml(subtitleLeft)}</text>
+
+  <text x="${padding}" y="94" fill="${theme.muted}" font-size="12" font-weight="650"
+        font-family="ui-sans-serif, system-ui">${escapeXml(totalText)}</text>
+
+  <text x="${width - padding - 110}" y="94" text-anchor="end" fill="${theme.muted}" font-size="12" font-weight="650"
+        font-family="ui-sans-serif, system-ui">${escapeXml(topText)}</text>
+
+  ${ringSvg({
+    cx: ringCx,
+    cy: ringCy,
+    r: 26,
+    strokeWidth: 7,
+    pct: grade.pct,
+    color: ringColor,
+    label: grade.letter,
   })}
+
+  <line x1="${padding}" y1="108" x2="${width - padding}" y2="108"
+        stroke="${theme.stroke}" stroke-width="1" opacity="0.75" />
+
   ${boxes}
 </svg>`;
 }
@@ -234,22 +332,32 @@ function renderBarsCard({ title, subtitleLeft, totalText, topText, rows }) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"
      xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${escapeXml(title)}">
-  ${svgHeader({
-    width,
-    height,
-    title,
-    subtitleLeft,
-    totalText,
-    topText,
-  })}
+  ${svgDefs()}
+  ${baseCard({ width, height })}
+
+  <text x="${padding}" y="46" fill="${theme.title}" font-size="22" font-weight="900"
+        font-family="ui-sans-serif, system-ui">${escapeXml(title)}</text>
+
+  <text x="${padding}" y="72" fill="${theme.muted}" font-size="12" font-weight="650"
+        font-family="ui-sans-serif, system-ui">${escapeXml(subtitleLeft)}</text>
+
+  <text x="${width - padding}" y="46" text-anchor="end" fill="${theme.text}" font-size="14" font-weight="900"
+        font-family="ui-sans-serif, system-ui">${escapeXml(totalText)}</text>
+
+  <text x="${width - padding}" y="72" text-anchor="end" fill="${theme.muted}" font-size="12" font-weight="650"
+        font-family="ui-sans-serif, system-ui">${escapeXml(topText)}</text>
+
+  <line x1="${padding}" y1="98" x2="${width - padding}" y2="98"
+        stroke="${theme.stroke}" stroke-width="1" opacity="0.75" />
+
   ${svgRows}
 </svg>`;
 }
 
-// ---- DATA SAYNC ----
+// ---- DATA ----
 
 async function fetchContribSince2021(login) {
-  // NOTE: GitHub限制 contributionsCollection(from,to) <= 1 year
+  // GitHub rule: contributionsCollection(from,to) must not exceed 1 year
   const q = `
     query($login: String!, $from: DateTime!, $to: DateTime!) {
       user(login: $login) {
@@ -291,7 +399,7 @@ async function fetchContribSince2021(login) {
 }
 
 async function fetchData() {
-  // user basic counts (repos + followers)
+  // user basic counts
   const qUser = `
     query($login: String!) {
       user(login: $login) {
@@ -304,10 +412,10 @@ async function fetchData() {
   const userData = await ghGraphQL(qUser, { login: USERNAME });
   const u = userData.user;
 
-  // contributions (since 2021) — year-by-year
+  // contributions since 2021
   const contrib = await fetchContribSince2021(USERNAME);
 
-  // repos pagination for stars + languages (public + private if token has access)
+  // repos pagination for stars + languages
   const qRepos = `
     query($login:String!, $cursor:String) {
       user(login:$login) {
@@ -340,7 +448,7 @@ async function fetchData() {
     const nodes = page.nodes || [];
 
     for (const r of nodes) {
-      if (r.isFork) continue;
+      if (r.isFork) continue; // keep clean
       starsTotal += Number(r.stargazerCount || 0);
 
       for (const e of (r.languages?.edges || [])) {
@@ -412,24 +520,24 @@ function makeActivityRows({ commits, prs, issues, reviews, contribTotal }) {
   }));
 }
 
-function makeLangRows(langRows) {
-  return langRows.map((r) => ({
-    name: r.name,
-    valueText: r.valueText,
-    percent: r.percent,
-  }));
-}
-
 async function main() {
   const d = await fetchData();
 
   const updated = "Updated hourly";
-  const subtitleRange = `All-time (since 2021) • Includes private repositories leading accuracy`;
-  // keep English & clean (no pink)
+  const subtitleRange = "All-time (since 2021) • Includes private repositories";
 
   const topActivity = pickTopActivity(d);
 
-  // Card 1: Grid stats
+  const grade = computeGrade({
+    commits: d.commits,
+    prs: d.prs,
+    issues: d.issues,
+    reviews: d.reviews,
+    starsTotal: d.starsTotal,
+    reposTotal: d.reposTotal,
+  });
+
+  // Card 1: Grid stats + grade ring
   const statsItems = [
     { label: "Repositories (Total)", value: fmtNumber(d.reposTotal) },
     { label: "Stars (Total)", value: fmtNumber(d.starsTotal) },
@@ -445,9 +553,10 @@ async function main() {
     totalText: `Total: ${fmtNumber(d.contribTotal)} contributions`,
     topText: `Top: ${topActivity}`,
     items: statsItems,
+    grade,
   });
 
-  // Card 2: Activity bars (WakaTime-style)
+  // Card 2: Activity bars
   const activityRows = makeActivityRows(d);
   const activitySvg = renderBarsCard({
     title: "📈 GitHub • Activity",
@@ -467,7 +576,7 @@ async function main() {
     subtitleLeft: `${updated} • Based on repository size (public + private)`,
     totalText: `Total: ${fmtNumber(d.langRows.length)} langs`,
     topText: `Top: ${topLang}`,
-    rows: makeLangRows(d.langRows),
+    rows: d.langRows,
   });
 
   fs.mkdirSync(OUT_DIR, { recursive: true });
