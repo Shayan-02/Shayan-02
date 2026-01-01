@@ -3,7 +3,7 @@ name: GitHub Cards (SVG)
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 * * * *"   # هر 1 ساعت
+    - cron: "0 * * * *" # hourly
 
 permissions:
   contents: write
@@ -30,6 +30,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/github-stats.svg assets/github-langs.svg
+          git add assets/github-stats.svg assets/github-activity.svg assets/github-langs.svg
           git commit -m "update github cards" || exit 0
           git push
