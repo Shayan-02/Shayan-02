@@ -20,7 +20,7 @@
 
   <rect x="0" y="0" width="900" height="494" rx="18" ry="18" fill="url(#bgGrad)" filter="url(#shadow)" />
 
-  <text x="28" y="46" fill="#E5E7EB note: official" font-size="22" font-weight="900"
+  <text x="28" y="46" fill="#E5E7EB" font-size="22" font-weight="900"
         font-family="ui-sans-serif, system-ui">💻 GitHub • Languages</text>
 
   <text x="28" y="72" fill="#94A3B8" font-size="12" font-weight="650"
@@ -163,7 +163,7 @@
               font-family="ui-sans-serif, system-ui">JavaScript</text>
 
         <text x="364" y="362" text-anchor="end" fill="#94A3B8" font-size="13" font-weight="650"
-              font-family="ui-sans-serif, system-ui">449.7 KB</text>
+              font-family="ui-sans-serif, system-ui">453.0 KB</text>
 
         <rect x="380" y="350" rx="6" ry="6" width="410" height="10" fill="#1F2937" opacity="0.95"/>
         <rect x="380" y="350" rx="6" ry="6" width="1" height="10" fill="#0EA5E9" filter="url(#barGlow)" />
