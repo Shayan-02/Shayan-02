@@ -30,7 +30,7 @@
         font-family="ui-sans-serif, system-ui">Total: 10 langs</text>
 
   <text x="872" y="72" text-anchor="end" fill="#94A3B8" font-size="12" font-weight="650"
-        font-family="ui-sans-serif, system-ui">Top: Jupyter Notebook (73.29%)</text>
+        font-family="ui-sans-serif, system-ui">Top: Jupyter Notebook (73.28%)</text>
 
   <line x1="28" y1="98" x2="872" y2="98"
         stroke="#334155" stroke-width="1" opacity="0.75" />
@@ -50,7 +50,7 @@
         <rect x="380" y="112" rx="6" ry="6" width="300" height="10" fill="#0EA5E9" filter="url(#barGlow)" />
 
         <text x="872" y="124" text-anchor="end" fill="#94A3B8" font-size="13" font-weight="700"
-              font-family="ui-sans-serif, system-ui">73.29%</text>
+              font-family="ui-sans-serif, system-ui">73.28%</text>
       
 
         <circle cx="56" cy="152" r="5" fill="#22C55E" opacity="0.95"/>
@@ -67,7 +67,7 @@
         <rect x="380" y="146" rx="6" ry="6" width="99" height="10" fill="#22C55E" filter="url(#barGlow)" />
 
         <text x="872" y="158" text-anchor="end" fill="#94A3B8" font-size="13" font-weight="700"
-              font-family="ui-sans-serif, system-ui">24.10%</text>
+              font-family="ui-sans-serif, system-ui">24.11%</text>
       
 
         <circle cx="56" cy="186" r="5" fill="#A78BFA" opacity="0.95"/>
@@ -129,7 +129,7 @@
               font-family="ui-sans-serif, system-ui">CSS</text>
 
         <text x="364" y="294" text-anchor="end" fill="#94A3B8" font-size="13" font-weight="650"
-              font-family="ui-sans-serif, system-ui">612.7 KB</text>
+              font-family="ui-sans-serif, system-ui">613.2 KB</text>
 
         <rect x="380" y="282" rx="6" ry="6" width="410" height="10" fill="#1F2937" opacity="0.95"/>
         <rect x="380" y="282" rx="6" ry="6" width="1" height="10" fill="#14B8A6" filter="url(#barGlow)" />
