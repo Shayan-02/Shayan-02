@@ -25,10 +25,10 @@
         font-family="ui-sans-serif, system-ui">Updated hourly</text>
 
   <text x="872" y="46" text-anchor="end" fill="#e4e4e7" font-size="14" font-weight="800"
-        font-family="ui-sans-serif, system-ui">Total: 2402h 12m</text>
+        font-family="ui-sans-serif, system-ui">Total: 2404h 1m</text>
 
   <text x="872" y="72" text-anchor="end" fill="#9aa4bf" font-size="12" font-weight="700"
-        font-family="ui-sans-serif, system-ui">Top: Chrome (59.50%)</text>
+        font-family="ui-sans-serif, system-ui">Top: Chrome (59.53%)</text>
 
   <line x1="28" y1="88" x2="872" y2="88"
         stroke="#334155" stroke-width="1" opacity="0.65" />
@@ -43,7 +43,7 @@
               font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">Chrome</text>
 
         <text x="364" y="112" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">1,429 hrs 20 mins</text>
+              font-family="ui-sans-serif, system-ui">1,431 hrs 8 mins</text>
 
         <rect x="380" y="100" rx="6" ry="6" width="410" height="10" fill="#2a2b3d" />
 
@@ -51,7 +51,7 @@
               fill="#ff4d6d" opacity="1" filter="url(#barGlow)" />
 
         <text x="872" y="112" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">59.50%</text>
+              font-family="ui-sans-serif, system-ui">59.53%</text>
       
 
         <circle cx="56" cy="140" r="5" fill="#f1fa8c" opacity="1"/>
@@ -71,7 +71,7 @@
               fill="#f1fa8c" opacity="1" filter="url(#barGlow)" />
 
         <text x="872" y="146" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">34.29%</text>
+              font-family="ui-sans-serif, system-ui">34.27%</text>
       
 
         <circle cx="56" cy="174" r="5" fill="#8be9fd" opacity="1"/>
@@ -131,7 +131,7 @@
               fill="#bd93f9" opacity="1" filter="url(#barGlow)" />
 
         <text x="872" y="248" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">1.01%</text>
+              font-family="ui-sans-serif, system-ui">1.00%</text>
       
 
         <circle cx="56" cy="276" r="5" fill="#ffb86c" opacity="1"/>
@@ -151,7 +151,7 @@
               fill="#ffb86c" opacity="1" filter="url(#barGlow)" />
 
         <text x="872" y="282" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">0.42%</text>
+              font-family="ui-sans-serif, system-ui">0.41%</text>
       
 
         <circle cx="56" cy="310" r="5" fill="#ff79c6" opacity="1"/>
