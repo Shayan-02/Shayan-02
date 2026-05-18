@@ -84,7 +84,7 @@
         <rect x="380" y="180" rx="6" ry="6" width="3" height="10" fill="#A78BFA" filter="url(#barGlow)" />
 
         <text x="872" y="192" text-anchor="end" fill="#94A3B8" font-size="13" font-weight="700"
-              font-family="ui-sans-serif, system-ui">0.68%</text>
+              font-family="ui-sans-serif, system-ui">0.69%</text>
       
 
         <circle cx="56" cy="220" r="5" fill="#F59E0B" opacity="0.95"/>
