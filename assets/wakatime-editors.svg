@@ -25,10 +25,10 @@
         font-family="ui-sans-serif, system-ui">Updated hourly</text>
 
   <text x="872" y="46" text-anchor="end" fill="#e4e4e7" font-size="14" font-weight="800"
-        font-family="ui-sans-serif, system-ui">Total: 2670h 7m</text>
+        font-family="ui-sans-serif, system-ui">Total: 2782h 39m</text>
 
   <text x="872" y="72" text-anchor="end" fill="#9aa4bf" font-size="12" font-weight="700"
-        font-family="ui-sans-serif, system-ui">Top: Chrome (61.44%)</text>
+        font-family="ui-sans-serif, system-ui">Top: Chrome (62.83%)</text>
 
   <line x1="28" y1="88" x2="872" y2="88"
         stroke="#334155" stroke-width="1" opacity="0.65" />
@@ -43,15 +43,15 @@
               font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">Chrome</text>
 
         <text x="364" y="112" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">1,640 hrs 36 mins</text>
+              font-family="ui-sans-serif, system-ui">1,748 hrs 25 mins</text>
 
         <rect x="380" y="100" rx="6" ry="6" width="410" height="10" fill="#2a2b3d" />
 
-        <rect x="380" y="100" rx="6" ry="6" width="252" height="10"
+        <rect x="380" y="100" rx="6" ry="6" width="258" height="10"
               fill="#ff4d6d" opacity="1" filter="url(#barGlow)" />
 
         <text x="872" y="112" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">61.44%</text>
+              font-family="ui-sans-serif, system-ui">62.83%</text>
       
 
         <circle cx="56" cy="140" r="5" fill="#f1fa8c" opacity="1"/>
@@ -63,15 +63,15 @@
               font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">VS Code</text>
 
         <text x="364" y="146" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">916 hrs 5 mins</text>
+              font-family="ui-sans-serif, system-ui">919 hrs 40 mins</text>
 
         <rect x="380" y="134" rx="6" ry="6" width="410" height="10" fill="#2a2b3d" />
 
-        <rect x="380" y="134" rx="6" ry="6" width="141" height="10"
+        <rect x="380" y="134" rx="6" ry="6" width="136" height="10"
               fill="#f1fa8c" opacity="1" filter="url(#barGlow)" />
 
         <text x="872" y="146" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">34.31%</text>
+              font-family="ui-sans-serif, system-ui">33.05%</text>
       
 
         <circle cx="56" cy="174" r="5" fill="#8be9fd" opacity="1"/>
@@ -91,7 +91,7 @@
               fill="#8be9fd" opacity="1" filter="url(#barGlow)" />
 
         <text x="872" y="180" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">2.27%</text>
+              font-family="ui-sans-serif, system-ui">2.18%</text>
       
 
         <circle cx="56" cy="208" r="5" fill="#50fa7b" opacity="1"/>
@@ -103,7 +103,7 @@
               font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">Firefox</text>
 
         <text x="364" y="214" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">34 hrs 31 mins</text>
+              font-family="ui-sans-serif, system-ui">34 hrs 37 mins</text>
 
         <rect x="380" y="202" rx="6" ry="6" width="410" height="10" fill="#2a2b3d" />
 
@@ -111,7 +111,7 @@
               fill="#50fa7b" opacity="1" filter="url(#barGlow)" />
 
         <text x="872" y="214" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">1.29%</text>
+              font-family="ui-sans-serif, system-ui">1.24%</text>
       
 
         <circle cx="56" cy="242" r="5" fill="#bd93f9" opacity="1"/>
@@ -127,11 +127,11 @@
 
         <rect x="380" y="236" rx="6" ry="6" width="410" height="10" fill="#2a2b3d" />
 
-        <rect x="380" y="236" rx="6" ry="6" width="2" height="10"
+        <rect x="380" y="236" rx="6" ry="6" width="1" height="10"
               fill="#bd93f9" opacity="1" filter="url(#barGlow)" />
 
         <text x="872" y="248" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">0.37%</text>
+              font-family="ui-sans-serif, system-ui">0.36%</text>
       
 
         <circle cx="56" cy="276" r="5" fill="#ffb86c" opacity="1"/>
@@ -171,7 +171,7 @@
               fill="#ff79c6" opacity="1" filter="url(#barGlow)" />
 
         <text x="872" y="316" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">0.14%</text>
+              font-family="ui-sans-serif, system-ui">0.13%</text>
       
 
         <circle cx="56" cy="344" r="5" fill="#ff4d6d" opacity="1"/>
@@ -180,10 +180,10 @@
               font-family="ui-sans-serif, system-ui">#8</text>
 
         <text x="74" y="350" fill="#cbd5e1" opacity="0.92" font-size="14"
-              font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">Rider</text>
+              font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">Cursor</text>
 
         <text x="364" y="350" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">20 mins</text>
+              font-family="ui-sans-serif, system-ui">1 hr 1 min</text>
 
         <rect x="380" y="338" rx="6" ry="6" width="410" height="10" fill="#2a2b3d" />
 
@@ -191,7 +191,7 @@
               fill="#ff4d6d" opacity="1" filter="url(#barGlow)" />
 
         <text x="872" y="350" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">0.01%</text>
+              font-family="ui-sans-serif, system-ui">0.04%</text>
       
 
         <circle cx="56" cy="378" r="5" fill="#f1fa8c" opacity="1"/>
@@ -200,10 +200,10 @@
               font-family="ui-sans-serif, system-ui">#9</text>
 
         <text x="74" y="384" fill="#cbd5e1" opacity="0.92" font-size="14"
-              font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">Notepad++</text>
+              font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">Rider</text>
 
         <text x="364" y="384" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">5 mins</text>
+              font-family="ui-sans-serif, system-ui">20 mins</text>
 
         <rect x="380" y="372" rx="6" ry="6" width="410" height="10" fill="#2a2b3d" />
 
@@ -211,7 +211,7 @@
               fill="#f1fa8c" opacity="1" filter="url(#barGlow)" />
 
         <text x="872" y="384" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">0.00%</text>
+              font-family="ui-sans-serif, system-ui">0.01%</text>
       
 
         <circle cx="56" cy="412" r="5" fill="#8be9fd" opacity="1"/>
@@ -220,10 +220,10 @@
               font-family="ui-sans-serif, system-ui">#10</text>
 
         <text x="74" y="418" fill="#cbd5e1" opacity="0.92" font-size="14"
-              font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">Android Studio</text>
+              font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">Notepad++</text>
 
         <text x="364" y="418" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">4 mins</text>
+              font-family="ui-sans-serif, system-ui">5 mins</text>
 
         <rect x="380" y="406" rx="6" ry="6" width="410" height="10" fill="#2a2b3d" />
 
