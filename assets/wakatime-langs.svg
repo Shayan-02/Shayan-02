@@ -25,7 +25,7 @@
         font-family="ui-sans-serif, system-ui">Updated hourly</text>
 
   <text x="872" y="46" text-anchor="end" fill="#e4e4e7" font-size="14" font-weight="800"
-        font-family="ui-sans-serif, system-ui">Total: 2868h 18m</text>
+        font-family="ui-sans-serif, system-ui">Total: 2872h 1m</text>
 
   <text x="872" y="72" text-anchor="end" fill="#9aa4bf" font-size="12" font-weight="700"
         font-family="ui-sans-serif, system-ui">Top: Other (63.63%)</text>
@@ -43,7 +43,7 @@
               font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">Other</text>
 
         <text x="364" y="112" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">1,825 hrs 11 mins</text>
+              font-family="ui-sans-serif, system-ui">1,827 hrs 25 mins</text>
 
         <rect x="380" y="100" rx="6" ry="6" width="410" height="10" fill="#2a2b3d" />
 
@@ -71,7 +71,7 @@
               fill="#f1fa8c" opacity="1" filter="url(#barGlow)" />
 
         <text x="872" y="146" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">22.98%</text>
+              font-family="ui-sans-serif, system-ui">22.95%</text>
       
 
         <circle cx="56" cy="174" r="5" fill="#8be9fd" opacity="1"/>
@@ -83,7 +83,7 @@
               font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">HTML</text>
 
         <text x="364" y="180" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">140 hrs 57 mins</text>
+              font-family="ui-sans-serif, system-ui">141 hrs 36 mins</text>
 
         <rect x="380" y="168" rx="6" ry="6" width="410" height="10" fill="#2a2b3d" />
 
@@ -91,7 +91,7 @@
               fill="#8be9fd" opacity="1" filter="url(#barGlow)" />
 
         <text x="872" y="180" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">4.91%</text>
+              font-family="ui-sans-serif, system-ui">4.93%</text>
       
 
         <circle cx="56" cy="208" r="5" fill="#50fa7b" opacity="1"/>
@@ -103,7 +103,7 @@
               font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">CSS</text>
 
         <text x="364" y="214" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">103 hrs 15 mins</text>
+              font-family="ui-sans-serif, system-ui">104 hrs 5 mins</text>
 
         <rect x="380" y="202" rx="6" ry="6" width="410" height="10" fill="#2a2b3d" />
 
@@ -111,7 +111,7 @@
               fill="#50fa7b" opacity="1" filter="url(#barGlow)" />
 
         <text x="872" y="214" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">3.60%</text>
+              font-family="ui-sans-serif, system-ui">3.62%</text>
       
 
         <circle cx="56" cy="242" r="5" fill="#bd93f9" opacity="1"/>
@@ -123,7 +123,7 @@
               font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">JavaScript</text>
 
         <text x="364" y="248" text-anchor="end" fill="#9aa4bf" font-size="13"
-              font-family="ui-sans-serif, system-ui">78 hrs 40 mins</text>
+              font-family="ui-sans-serif, system-ui">78 hrs 41 mins</text>
 
         <rect x="380" y="236" rx="6" ry="6" width="410" height="10" fill="#2a2b3d" />
 
