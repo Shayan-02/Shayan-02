@@ -118,7 +118,7 @@
         <rect x="380" y="248" rx="6" ry="6" width="3" height="10" fill="#38BDF8" filter="url(#barGlow)" />
 
         <text x="872" y="260" text-anchor="end" fill="#94A3B8" font-size="13" font-weight="700"
-              font-family="ui-sans-serif, system-ui">0.65%</text>
+              font-family="ui-sans-serif, system-ui">0.66%</text>
       
 
         <circle cx="56" cy="288" r="5" fill="#14B8A6" opacity="0.95"/>
@@ -152,7 +152,7 @@
         <rect x="380" y="316" rx="6" ry="6" width="1" height="10" fill="#EAB308" filter="url(#barGlow)" />
 
         <text x="872" y="328" text-anchor="end" fill="#94A3B8" font-size="13" font-weight="700"
-              font-family="ui-sans-serif, system-ui">0.32%</text>
+              font-family="ui-sans-serif, system-ui">0.31%</text>
       
 
         <circle cx="56" cy="356" r="5" fill="#0EA5E9" opacity="0.95"/>
