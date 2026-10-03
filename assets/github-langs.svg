@@ -61,13 +61,13 @@
               font-family="ui-sans-serif, system-ui">HTML</text>
 
         <text x="364" y="158" text-anchor="end" fill="#94A3B8" font-size="13" font-weight="650"
-              font-family="ui-sans-serif, system-ui">51.6 MB</text>
+              font-family="ui-sans-serif, system-ui">51.7 MB</text>
 
         <rect x="380" y="146" rx="6" ry="6" width="410" height="10" fill="#1F2937" opacity="0.95"/>
         <rect x="380" y="146" rx="6" ry="6" width="90" height="10" fill="#22C55E" filter="url(#barGlow)" />
 
         <text x="872" y="158" text-anchor="end" fill="#94A3B8" font-size="13" font-weight="700"
-              font-family="ui-sans-serif, system-ui">21.96%</text>
+              font-family="ui-sans-serif, system-ui">21.97%</text>
       
 
         <circle cx="56" cy="186" r="5" fill="#A78BFA" opacity="0.95"/>
@@ -146,13 +146,13 @@
               font-family="ui-sans-serif, system-ui">CSS</text>
 
         <text x="364" y="328" text-anchor="end" fill="#94A3B8" font-size="13" font-weight="650"
-              font-family="ui-sans-serif, system-ui">781.2 KB</text>
+              font-family="ui-sans-serif, system-ui">784.6 KB</text>
 
         <rect x="380" y="316" rx="6" ry="6" width="410" height="10" fill="#1F2937" opacity="0.95"/>
         <rect x="380" y="316" rx="6" ry="6" width="1" height="10" fill="#EAB308" filter="url(#barGlow)" />
 
         <text x="872" y="328" text-anchor="end" fill="#94A3B8" font-size="13" font-weight="700"
-              font-family="ui-sans-serif, system-ui">0.32%</text>
+              font-family="ui-sans-serif, system-ui">0.33%</text>
       
 
         <circle cx="56" cy="356" r="5" fill="#0EA5E9" opacity="0.95"/>
@@ -163,7 +163,7 @@
               font-family="ui-sans-serif, system-ui">JavaScript</text>
 
         <text x="364" y="362" text-anchor="end" fill="#94A3B8" font-size="13" font-weight="650"
-              font-family="ui-sans-serif, system-ui">567.2 KB</text>
+              font-family="ui-sans-serif, system-ui">567.3 KB</text>
 
         <rect x="380" y="350" rx="6" ry="6" width="410" height="10" fill="#1F2937" opacity="0.95"/>
         <rect x="380" y="350" rx="6" ry="6" width="1" height="10" fill="#0EA5E9" filter="url(#barGlow)" />
